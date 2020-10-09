@@ -1,7 +1,10 @@
-const fetch = require('node-fetch');
-const apiKey = process.env.REACT_APP_API_KEY;
-const url = "https://api.themoviedb.org/3/";
+import routes from "../routes";
 
+const fetch = require('node-fetch');
+const apiKey = process.env.API_KEY;
+const url = "https://api.themoviedb.org/3/";
+const express = require('express')
+const app = express();
 interface Data {
   year?: number | string,
   rating?: number | string,
