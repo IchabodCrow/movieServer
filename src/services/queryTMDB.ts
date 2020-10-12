@@ -1,21 +1,37 @@
-import routes from "../routes";
-
 const fetch = require('node-fetch');
-const apiKey = process.env.API_KEY;
+const apiKey = "09f30eef2a2368938501ec982e6bd612";
 const url = "https://api.themoviedb.org/3/";
 const express = require('express')
 const app = express();
-interface Data {
-  year?: number | string,
-  rating?: number | string,
+
+interface IFilterData {
+  year?: string,
+  rating?: string,
   genres?: Array<number>,
   page?: number
+}
+
+const genreFilter = (genres: Array<number>) => {
+  const genresStr = genres.join()
+  genresStr.length !== 0 && `with_genres=${genresStr}`
+}
+
+const ratingFilter = (rating: string) => {
+  rating.length !== 0 && `vote_average.gte=${rating}`;
+}
+
+const yearFilter = (year: string) => {
+  year.length !== 0 && `year=${year}`
+}
+
+const pageNumb = (page: number) => {
+  page && `page${page}`
 }
 
 export const movieGenres = () => {
   return fetch(`${url}genre/movie/list?api_key=${apiKey}}`)
     .then(res => res.json())
-    .then(data => data)
+    .then(data =>  data)
     .catch(err => console.error(err));
 };
 
@@ -24,14 +40,9 @@ export const movieListWithFilters = ({
   rating = "",
   genres= [],
   page,
-}: Data) => {
-  const genre = genres.join();
-  const genreUrl = `with_genres=${genre}`;
-  const ratingUrl = `vote_average.gte=${rating}`;
-  const yearUrl = `year=${year}`;
-  const pageUrl = `page${page}`;
+}: IFilterData) => {
   return fetch(
-    `${url}discover/movie?api_key=${apiKey}&${pageUrl}&${yearUrl}&${ratingUrl}&${genreUrl}`
+    `${url}discover/movie?api_key=${apiKey}&${pageNumb(page)}&${yearFilter(year)}&${ratingFilter(rating)}&${genreFilter(genres)}`
   )
     .then((res) => res.json())
     .then((data) => data)

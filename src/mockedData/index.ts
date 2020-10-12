@@ -1,3 +1,3 @@
-import { movieGenres } from "../services/queryTMDB";
+import { movieGenres, movieListWithFilters } from "../services/queryTMDB";
 
-export const genres = movieGenres().then( data => JSON.stringify(data))
+export const genres = movieListWithFilters({});

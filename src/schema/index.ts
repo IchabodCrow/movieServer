@@ -8,9 +8,5 @@ export const typeDefs = gql`
  
   type Query {
     genres: String,
-    # genresId: String,
-    # name: String
   }
-
 `;
-
