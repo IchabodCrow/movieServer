@@ -16,6 +16,10 @@ export const typeDefs = gql`
     movieId: String
   }
 
+  type Genres {
+    genres: String
+  }
+
   type Filters {
     id: ID
     year: String

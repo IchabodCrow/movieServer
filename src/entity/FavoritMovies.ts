@@ -1,13 +1,13 @@
-import { Column, Entity, PrimaryColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity()
 export class FavoriteMovies {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   movieId: number;
 
   @Column()
-  user_id: number;
+  userId: number;
 }

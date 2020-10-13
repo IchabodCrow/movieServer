@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Genres } from "./Genres";
 
 @Entity()
 export class Filtres {
@@ -11,10 +12,11 @@ export class Filtres {
   @Column()
   rating: string;
 
-  @Column()
-  genres: string;
+  @OneToOne(type => Genres)
+  @JoinColumn()
+  genres: Genres;
 
   @Column()
-  user_id: string;
+  userId: number;
 
 }
