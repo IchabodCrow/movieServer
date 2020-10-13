@@ -2,6 +2,7 @@ const { gql } = require('apollo-server');
 
 export const typeDefs = gql`
   type User {
+    id: String
     name: String
     password: String
   }
@@ -12,19 +13,33 @@ export const typeDefs = gql`
   }
 
   type Movie {
-    id: String
-    name: String
+    movieId: String
+  }
+
+  type Filters {
+    id: ID
+    year: String
+    rating: String
+    genres: String
+    userId: String
   }
 
   type Query {
-    userById(id: Int): User
-    filters: String
+    readFiltres: [Filters]
+    userById(id: ID): User
     movies: [Movie]
   }
 
   type Mutation {
-    deleteMovie(id: String): [Movie]
-    addMovie(id: String): [Movie]
+    addFiltres(
+      year: String
+      rating: String
+      genres: String
+      userId: String
+    ): Filters
+    deleteMovie(id: String): Movie
+    deleteFiltres(id: String): Filters
+    addMovie(id: String, movieId: String): Movie
     login(email: String!, password: String!): Login
   }
 `;
