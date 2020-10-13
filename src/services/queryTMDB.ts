@@ -1,6 +1,8 @@
 const fetch = require('node-fetch');
 const apiKey = process.env.API_KEY;
 const url = "https://api.themoviedb.org/3/";
+const express = require('express')
+const app = express();
 
 interface IFilterData {
   year?: string,

@@ -1,17 +1,17 @@
 import "reflect-metadata";
 import * as express from "express";
-import * as bodyParser from "body-parser";
 import { createConnection } from "typeorm"
-import routes from "./routes";
+import { typeDefs } from './schema'
+import { resolvers } from "./resolvers"
 
+const {ApolloServer} = require("apollo-server");
 const app = express();
 
 createConnection()
   .then((connection) => {})
   .catch((error) => console.error(error));
 
-app.use(bodyParser.json());
-app.use(routes);
-app.listen(3333);
-
-console.log();
+const server = new ApolloServer({ typeDefs, resolvers });
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
