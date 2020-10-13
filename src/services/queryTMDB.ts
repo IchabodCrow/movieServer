@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const apiKey = "09f30eef2a2368938501ec982e6bd612";
+const apiKey = process.env.API_KEY;
 const url = "https://api.themoviedb.org/3/";
 const express = require('express')
 const app = express();
@@ -12,20 +12,16 @@ interface IFilterData {
 }
 
 const genreFilter = (genres: Array<number>) => {
-  const genresStr = genres.join()
-  genresStr.length !== 0 && `with_genres=${genresStr}`
+  genres.length > 0 && 'with_genres=$' + genres.join()
 }
-
 const ratingFilter = (rating: string) => {
-  rating.length !== 0 && `vote_average.gte=${rating}`;
+  rating.length > 0 && 'vote_average.gte=' + rating 
 }
-
 const yearFilter = (year: string) => {
-  year.length !== 0 && `year=${year}`
+  year.length > 0 && 'year=' + year
 }
-
 const pageNumb = (page: number) => {
-  page && `page${page}`
+  page && 'page' + page
 }
 
 export const movieGenres = () => {
