@@ -44,6 +44,6 @@ export const typeDefs = gql`
     deleteMovie(id: String): Movie
     deleteFiltres(id: String): Filters
     addMovie(id: String, movieId: String): Movie
-    login(email: String!, password: String!): Login
+    login(email: String, password: String): Login
   }
 `;
