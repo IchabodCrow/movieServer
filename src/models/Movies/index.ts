@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
 import { FavoriteMovies } from "../../entity/FavoritMovies";
+import { User } from "../../entity/User";
 
 interface IArgumentsForMovieMutation {
   id: number
@@ -16,18 +17,23 @@ export default {
   }, 
   Mutation: {
     deleteMovie: async (args, { movieId }: IArgumentsForMovieMutation) => {
-      const movieRepository = getRepository(FavoriteMovies, "default");
-      const movieRemove = await movieRepository.findOne(movieId);
-      return await movieRepository.remove(movieRemove);
+      // const movieRepository = getRepository(FavoriteMovies, "default");
+      // const movieRemove = await movieRepository.findOne(movieId);
+      // await movieRepository.remove(movieRemove);
+      
     },
 
     addMovie: async (args, { id, movieId }: IArgumentsForMovieMutation) => {
-      const favoriteMovies = new FavoriteMovies();
-      favoriteMovies.id = id;
-      favoriteMovies.movieId = movieId;
-      return await getRepository(FavoriteMovies, "default").save(
-        favoriteMovies
-      );
+      // const userInSystem = getRepository(User, "default").findOne()
+      // const favoriteMovies = getRepository(FavoriteMovies).create({
+      //   userId: (await userInSystem).id,
+      //   id,
+      //   movieId,
+      // });
+      
+      // return await getRepository(FavoriteMovies, "default").save(
+      //   favoriteMovies
+      // );
     },
   }
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Genres } from "./Genres";
 
 @Entity()
@@ -12,11 +12,12 @@ export class Filtres {
   @Column()
   rating: string;
 
-  @OneToOne(type => Genres)
+  @OneToOne(type => Genres, genres => genres.genre, {
+    cascade: true,
+})
   @JoinColumn()
   genres: Genres;
 
   @Column()
   userId: number;
-
 }
