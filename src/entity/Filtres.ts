@@ -12,7 +12,7 @@ export class Filtres {
   @Column()
   rating: string;
 
-  @OneToOne(type => Genres, genres => genres.genre, {
+  @OneToMany(type => Genres, genres => genres.genre, {
     cascade: true,
 })
   @JoinColumn()

@@ -38,7 +38,7 @@ export const typeDefs = gql`
       year: String
       rating: String
       genres: String
-    ): Boolean
+    ): Genres
     deleteMovie(id: String): Boolean
     deleteFiltres(id: String): Boolean
     addMovie(id: String, movieId: String): Movie
