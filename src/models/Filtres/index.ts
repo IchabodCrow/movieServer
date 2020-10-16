@@ -22,24 +22,29 @@ export default {
       args,
       { year, rating, genres }: IArgumentsForFiltres
     ) => {
-      // const userInSystem = getRepository(User, "default").findOne()
-      // const genre = getRepository(Genres).create({
-      //   genre: genres
-      // })
-      // const filtres = getRepository(Filtres).create({
-      //   userId: (await userInSystem).id,
-      //   year: year,
-      //   rating: rating,
-      //   genres: genre,
-      // });
-      // await getRepository(Filtres, "default").save(filtres);
-      // await getRepository(Genres, "default").save(genre);
+      
+      const userInSystem = getRepository(User, "default").findOne()
+      const genre = getRepository(Genres).create({
+        genre: genres
+      })
+      const filtres = getRepository(Filtres).create({
+        userId: (await userInSystem).id,
+        year: year,
+        rating: rating,
+        genres: genre,
+      });
+
+        await getRepository(Genres, "default").save(genre),
+        await getRepository(Filtres, "default").save(filtres)
+
+        return true
+    
     },
 
     deleteFiltres: async (args, { movieId }) => {
-      // const movieRepository = getRepository(Filtres, "default");
-      // const movieRemove = await movieRepository.findOne(movieId);
-      // await movieRepository.remove(movieRemove);
+      const movieRepository = getRepository(Filtres, "default");
+      const movieRemove = await movieRepository.findOne(movieId);
+      await movieRepository.remove(movieRemove);
     },
   }
 }
