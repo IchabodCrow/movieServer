@@ -1,8 +1,6 @@
-import { User } from "../../entity/User";
-import { AdvancedConsoleLogger, getRepository } from "typeorm";
+import {  getRepository } from "typeorm";
 import { Filter } from "../../entity/Filter";
 import { Genres } from "../../entity/Genres";
-import { Console } from "console";
 
 interface IArgumentsForFiltres {
   year?: string
@@ -29,21 +27,33 @@ export default {
       let genreFromDB = await getRepository(Genres).findOne({
         genreId: genre.genresId,
       });
+     
       if (!genreFromDB) {
         genreFromDB = await getRepository(Genres).create(genre);
         await getRepository(Genres).save(genreFromDB);
+      } else{
+        genreFromDB.genreId = genre.genresId
+        genreFromDB.name = genre.name
+        await getRepository(Genres).save(genreFromDB);
       }
-
-      let filtresFromDB = await getRepository(Filter).findOne({ id: 1 });
       
+      let filtresFromDB = await getRepository(Filter).findOne({ id: 2 });
+
       if (!filtresFromDB) {
         filtresFromDB = await getRepository(Filter).create({
           year: year,
           rating: rating,
-          id: 1,
+          genre: [...filtresFromDB.genre, genreFromDB],
+          id: 2,
         });
-        await getRepository(Filter).save(filtresFromDB);
+      } else {
+        filtresFromDB.year = year
+        filtresFromDB.rating = rating
+        filtresFromDB.genre =  [...filtresFromDB.genre || [], genreFromDB]
       }
+      console.log(filtresFromDB.genre.length)
+
+      await getRepository(Filter).save(filtresFromDB);
       genreFromDB.filterId = filtresFromDB.id;
       await getRepository(Genres).save(genreFromDB);
       return genreFromDB;

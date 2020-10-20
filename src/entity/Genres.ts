@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Filter } from "./Filter";
 
 @Entity()
 export class Genres {
@@ -13,4 +14,7 @@ export class Genres {
 
   @Column({nullable: true})
   filterId: number
+
+  @ManyToMany( type => Filter, filter => filter.genre)
+  genre: Filter[]
 }

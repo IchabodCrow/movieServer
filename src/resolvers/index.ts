@@ -1,6 +1,7 @@
 import UserResolver from "../models/User"
 import MoviesResolver from "../models/Movies"
 import FiltresResolver from "../models/Filtres"
+import FavoriteMovie from "../models/FavoriteMovie";
 
 
 export const resolvers = {
@@ -12,6 +13,7 @@ export const resolvers = {
   Mutation: {
     ...FiltresResolver.Mutation,
     ...MoviesResolver.Mutation,
-    ...UserResolver.Mutation
+    ...UserResolver.Mutation,
+    ...FavoriteMovie.Mutation
   },
 };

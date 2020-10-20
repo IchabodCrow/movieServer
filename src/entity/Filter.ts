@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Genres } from "./Genres";
 
 
@@ -13,9 +13,9 @@ export class Filter {
   @Column({nullable: true})
   rating: string;
 
-  @OneToOne( type => Genres)
-  @JoinColumn()
-  genre: Genres[]
+  @ManyToMany( type => Genres)
+  @JoinTable()
+  genre: Genres[];
 
   @Column({nullable: true})
   userId: number;

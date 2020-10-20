@@ -8,6 +8,6 @@ export class FavoriteMovies {
   @Column()
   movieId: number;
 
-  @Column()
+  @Column({nullable: true})
   userId: number;
 }

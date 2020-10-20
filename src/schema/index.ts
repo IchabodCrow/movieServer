@@ -13,6 +13,12 @@ export const typeDefs = gql`
 
   type Movie {
     movieId: String
+    title: String
+    img: String
+    average: String
+    date: String
+    overview: String
+
   }
 
   type Genres {
@@ -31,7 +37,8 @@ export const typeDefs = gql`
   type Query {
     readFiltres: [Filters]
     userById(id: ID): User
-    movies: [Movie]
+    genresList: [Genres]
+    movieList: [Movie]
   }
 
   input GenreInput {
@@ -45,9 +52,9 @@ export const typeDefs = gql`
       rating: String
       genre: GenreInput!
     ): Genres
-    deleteMovie(id: String): Boolean
+    deleteMovie(movieId: String): Int
     deleteFiltres(id: String, filter:String): Int
-    addMovie(id: String, movieId: String): Movie
+    addMovie(movieId: String): Movie
     login(email: String, password: String): Login
   }
 `;

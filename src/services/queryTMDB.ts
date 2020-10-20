@@ -25,9 +25,9 @@ const pageNumb = (page: number) => {
 }
 
 export const movieGenres = () => {
-  return fetch(`${url}genre/movie/list?api_key=${apiKey}}`)
-    .then(res => res.json())
-    .then(data =>  data)
+  return fetch(`${url}genre/movie/list?api_key=${apiKey}&}`)
+    .then((res) => res.json())
+    .then((data) =>  data)
     .catch(err => console.error(err));
 };
 
