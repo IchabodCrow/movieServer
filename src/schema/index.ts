@@ -16,14 +16,15 @@ export const typeDefs = gql`
   }
 
   type Genres {
-    genres: String
+    genreId: Int
+    name: String
   }
 
   type Filters {
     id: String
     year: String
     rating: String
-    genres: Genres
+    genre: Genres
     userId: String
   }
 
@@ -33,14 +34,19 @@ export const typeDefs = gql`
     movies: [Movie]
   }
 
+  input GenreInput {
+    genreId: Int
+    name: String
+  }
+
   type Mutation {
-    addFiltres(
+    updateFiltres(
       year: String
       rating: String
-      genres: String
+      genre: GenreInput!
     ): Genres
     deleteMovie(id: String): Boolean
-    deleteFiltres(id: String): Boolean
+    deleteFiltres(id: String, filter:String): Int
     addMovie(id: String, movieId: String): Movie
     login(email: String, password: String): Login
   }

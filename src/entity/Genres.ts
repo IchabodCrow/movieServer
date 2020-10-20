@@ -5,6 +5,12 @@ export class Genres {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  genre: string
+  @Column({nullable: true})
+  genreId: number
+
+  @Column({nullable: true})
+  name: string
+
+  @Column({nullable: true})
+  filterId: number
 }
