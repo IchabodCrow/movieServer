@@ -21,8 +21,7 @@ export const typeDefs = gql`
   }
 
   type Genres {
-    genreId: Int
-    name: String
+    genreId: String
   }
 
   type Filters {
@@ -42,7 +41,6 @@ export const typeDefs = gql`
 
   input GenreInput {
     genreId: Int
-    name: String
   }
 
   type Mutation {

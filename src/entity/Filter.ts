@@ -7,7 +7,7 @@ export class Filter {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   year: string;
 
   @Column({ nullable: true })
