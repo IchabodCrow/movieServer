@@ -27,32 +27,28 @@ export default {
       let genreFromDB = await getRepository(Genres).findOne({
         genreId: genre.genresId,
       });
-     
+
       if (!genreFromDB) {
         genreFromDB = await getRepository(Genres).create(genre);
-        await getRepository(Genres).save(genreFromDB);
-      } else{
-        genreFromDB.genreId = genre.genresId
-        genreFromDB.name = genre.name
-        await getRepository(Genres).save(genreFromDB);
+      } else {
+        genreFromDB.genreId = genre.genresId;
+        genreFromDB.name = genre.name;
       }
-      
-      let filtresFromDB = await getRepository(Filter).findOne({ id: 2 });
+      await getRepository(Genres).save(genreFromDB);
+      let filtresFromDB = await getRepository(Filter).findOne({ userId: 2 });
 
       if (!filtresFromDB) {
         filtresFromDB = await getRepository(Filter).create({
           year: year,
           rating: rating,
-          genre: [...filtresFromDB.genre, genreFromDB],
-          id: 2,
+          genre: [genreFromDB],
+          userId: 2,
         });
       } else {
-        filtresFromDB.year = year
-        filtresFromDB.rating = rating
-        filtresFromDB.genre =  [...filtresFromDB.genre || [], genreFromDB]
+        filtresFromDB.year = year;
+        filtresFromDB.rating = rating;
+        filtresFromDB.genre = [genreFromDB];
       }
-      console.log(filtresFromDB.genre.length)
-
       await getRepository(Filter).save(filtresFromDB);
       genreFromDB.filterId = filtresFromDB.id;
       await getRepository(Genres).save(genreFromDB);

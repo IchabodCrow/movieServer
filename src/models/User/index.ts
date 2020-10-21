@@ -37,7 +37,7 @@ export default {
       if (!valid) {
         throw new Error("Incorrcet password");
       }
-       
+
       return {
         token: jwt.sign(
           {

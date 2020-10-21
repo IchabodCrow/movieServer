@@ -18,7 +18,6 @@ export const typeDefs = gql`
     average: String
     date: String
     overview: String
-
   }
 
   type Genres {
@@ -47,13 +46,9 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    updateFiltres(
-      year: String
-      rating: String
-      genre: GenreInput!
-    ): Genres
+    updateFiltres(year: String, rating: String, genre: GenreInput!): Genres
     deleteMovie(movieId: String): Int
-    deleteFiltres(id: String, filter:String): Int
+    deleteFiltres(id: String, filter: String): Int
     addMovie(movieId: String): Movie
     login(email: String, password: String): Login
   }

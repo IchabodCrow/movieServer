@@ -34,11 +34,13 @@ export const movieGenres = () => {
 export const movieListWithFilters = ({
   year = "",
   rating = "",
-  genres= [],
+  genres = [],
   page,
 }: IFilterData) => {
   return fetch(
-    `${url}discover/movie?api_key=${apiKey}&${pageNumb(page)}&${yearFilter(year)}&${ratingFilter(rating)}&${genreFilter(genres)}`
+    `${url}discover/movie?api_key=${apiKey}&${pageNumb(page)}&${yearFilter(
+      year
+    )}&${ratingFilter(rating)}&${genreFilter(genres)}`
   )
     .then((res) => res.json())
     .then((data) => data)

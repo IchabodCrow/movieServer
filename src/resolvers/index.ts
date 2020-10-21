@@ -8,12 +8,12 @@ export const resolvers = {
   Query: {
     ...FiltresResolver.Query,
     ...MoviesResolver.Query,
-    ...UserResolver.Query
+    ...UserResolver.Query,
   },
   Mutation: {
     ...FiltresResolver.Mutation,
     ...MoviesResolver.Mutation,
     ...UserResolver.Mutation,
-    ...FavoriteMovie.Mutation
+    ...FavoriteMovie.Mutation,
   },
 };
