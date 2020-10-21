@@ -2,7 +2,6 @@ const { gql } = require('apollo-server');
 
 export const typeDefs = gql`
   type User {
-    id: String
     name: String
     password: String
   }
@@ -14,36 +13,43 @@ export const typeDefs = gql`
 
   type Movie {
     movieId: String
+    title: String
+    img: String
+    average: String
+    date: String
+    overview: String
   }
 
   type Genres {
-    genres: String
+    genreId: Int
+    name: String
   }
 
   type Filters {
-    id: ID
+    id: String
     year: String
     rating: String
-    genres: String
+    genre: Genres
     userId: String
   }
 
   type Query {
     readFiltres: [Filters]
     userById(id: ID): User
-    movies: [Movie]
+    genresList: [Genres]
+    movieList: [Movie]
+  }
+
+  input GenreInput {
+    genreId: Int
+    name: String
   }
 
   type Mutation {
-    addFiltres(
-      year: String
-      rating: String
-      genres: String
-      userId: String
-    ): Filters
-    deleteMovie(id: String): Movie
-    deleteFiltres(id: String): Filters
-    addMovie(id: String, movieId: String): Movie
+    updateFiltres(year: String, rating: String, genre: GenreInput!): Genres
+    deleteMovie(movieId: String): Int
+    deleteFiltres(id: String, filter: String): Int
+    addMovie(movieId: String): Movie
     login(email: String, password: String): Login
   }
 `;

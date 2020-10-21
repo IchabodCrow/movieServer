@@ -25,20 +25,22 @@ const pageNumb = (page: number) => {
 }
 
 export const movieGenres = () => {
-  return fetch(`${url}genre/movie/list?api_key=${apiKey}}`)
-    .then(res => res.json())
-    .then(data =>  data)
+  return fetch(`${url}genre/movie/list?api_key=${apiKey}&}`)
+    .then((res) => res.json())
+    .then((data) =>  data)
     .catch(err => console.error(err));
 };
 
 export const movieListWithFilters = ({
   year = "",
   rating = "",
-  genres= [],
+  genres = [],
   page,
 }: IFilterData) => {
   return fetch(
-    `${url}discover/movie?api_key=${apiKey}&${pageNumb(page)}&${yearFilter(year)}&${ratingFilter(rating)}&${genreFilter(genres)}`
+    `${url}discover/movie?api_key=${apiKey}&${pageNumb(page)}&${yearFilter(
+      year
+    )}&${ratingFilter(rating)}&${genreFilter(genres)}`
   )
     .then((res) => res.json())
     .then((data) => data)

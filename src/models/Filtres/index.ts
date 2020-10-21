@@ -1,41 +1,71 @@
-import { getRepository } from "typeorm";
-import { Filtres } from "../../entity/Filtres";
+import {  getRepository } from "typeorm";
+import { Filter } from "../../entity/Filter";
 import { Genres } from "../../entity/Genres";
 
 interface IArgumentsForFiltres {
   year?: string
   rating?: string
-  genres?: string
+  genre?: {
+    genresId: number,
+    name: string
+  }
   userId: string
 }
 
 export default {
   Query: {
     readFiltres: async () => {
-      const filtresRepository = getRepository(Filtres, "default");
+      const filtresRepository = getRepository(Filter, "default");
       return await filtresRepository.find();
     },
-  }, 
+  },
   Mutation: {
-    addFiltres: async (
+    updateFiltres: async (
       args,
-      { year, rating, genres }: IArgumentsForFiltres
+      { year, rating, genre }: IArgumentsForFiltres
     ) => {
-      const filtres = new Filtres();
-      const genre = new Genres();
+      let genreFromDB = await getRepository(Genres).findOne({
+        genreId: genre.genresId,
+      });
 
-      filtres.rating = rating;
-      filtres.year = year;
-      genre.genre = genres;
+      if (!genreFromDB) {
+        genreFromDB = await getRepository(Genres).create(genre);
+      } else {
+        genreFromDB.genreId = genre.genresId;
+        genreFromDB.name = genre.name;
+      }
+      await getRepository(Genres).save(genreFromDB);
+      let filtresFromDB = await getRepository(Filter).findOne({ userId: 2 });
 
-      await getRepository(Filtres, "default").save(filtres);
-      await getRepository(Genres, "default").save(filtres);
+      if (!filtresFromDB) {
+        filtresFromDB = await getRepository(Filter).create({
+          year: year,
+          rating: rating,
+          genre: [genreFromDB],
+          userId: 2,
+        });
+      } else {
+        filtresFromDB.year = year;
+        filtresFromDB.rating = rating;
+        filtresFromDB.genre = [genreFromDB];
+      }
+      await getRepository(Filter).save(filtresFromDB);
+      genreFromDB.filterId = filtresFromDB.id;
+      await getRepository(Genres).save(genreFromDB);
+      return genreFromDB;
     },
 
-    deleteFiltres: async (args, { movieId }) => {
-      const movieRepository = getRepository(Filtres, "default");
-      const movieRemove = await movieRepository.findOne(movieId);
-      return await movieRepository.remove(movieRemove);
+    deleteFiltres: async (args, { id, filter }) => {
+      if (filter === "cloudGenres") {
+        let genreFromDB = await getRepository(Genres);
+        let genreRemove = await genreFromDB.find({ filterId: 1, genreId: id });
+        await genreFromDB.remove(genreRemove);
+      } else {
+        let filtresFromDB = await getRepository(Filter);
+        let filterRemove = await filtresFromDB.findOne({ id: 1 });
+        await filtresFromDB.remove(filterRemove);
+      }
+      return id;
     },
-  }
-}
+  },
+};
